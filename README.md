@@ -37,7 +37,7 @@ Pada modul ini kami akan membuat login form menggunakan form yang terdapat pada 
 - **Artikel (Berita dan tips & tricks)**\
 Pada modul Artikel, kami akan menampilkan artikel-artikel seputar COVID-19. User dengan status admin dapat menambahkan artikel baru dengan sebuah form, sedangkan pengguna hanya dapat membaca artikel. Kemudian, modul  ini akan terintegrasi dengan data pada webapp apabila dilakukan update.
 
-- **Info Lokasi Vaksin**
+- **Info Lokasi Vaksin**\
 Pada modul Info Lokasi Vaksin, kami akan menampilkan lokasi-lokasi vaksin yang tersedia. Info lokasi vaksin yang tersedia didapat dari admin yang menambahkan lokas vaksin dengan form. Jika hanya tamu, maka hanya terdapat tampilan lokasi yang terseda, namun bila yang login adalah admin, maka dapat menambahkan lokasi vaksin yang baru.
 
 - **Info Vaksin di Indonesia**\
