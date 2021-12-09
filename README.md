@@ -43,7 +43,7 @@ Pada modul Info Lokasi Vaksin, kami akan menampilkan lokasi-lokasi vaksin yang t
 - **Info Vaksin di Indonesia**\
 Pada modul Info Vaksin, kami akan menampilkan info-info vaksin yang ada di Indonesia. Informasi tiap vaksin disimpan pada text JSON di webapp vaksinfo. Kami akan mengintegrasikan webapp yang kami buat dengan cara melakukan pemanggilan Asynchronus JSON menggunakan flutter untuk menampilkan informasi tersebut. Pada modul ini kami juga akan membuat form yang dapat digunakan user untuk memberikan komen tentang vaksin yang suda diambil.
 
-- **Statistik**
+- **Statistik**\
 Pada modul statistik, kami akan menampilkan statistik vaksinasi dan juga kasus COVID-19 di Indonesia. Integrasi modul ini dapat dilakukan dengan mengakses endpoint API yang sama, yaitu API data COVID-19 nasional yang bersumber dari Kemenkes. Pemanggilan API tersebut akan bersifat asynchronous dengan time data yang dikembalikan yaitu objek JSON. Melalui data tersebut, akan dirender berbagai grafik/bagan yang bersesuaian. 
 
 - **Tanya Jawab**\
