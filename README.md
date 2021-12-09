@@ -35,9 +35,11 @@ Pada modul beranda, kami akan membuat suatu layout yang terdiri atas widget _dra
 Pada modul ini kami akan membuat login form menggunakan form yang terdapat pada flutter. Selain itu, pada modul ini kami juga akan menggunakan pemanggilan asynchronous HTTP get untuk memvalidasi akun user yang dimasukkan pada form login. Kami akan mengintegrasikan webapp yang kami buat dengan aplikasi yang akan kami buat dengan membuat suatu views pada webapp kami agar aplikasi dapat mengirim data ke webapp lalu akan diproses oleh views yang terdapat pada webapp dan melakukan validasi terhadap user yang masuk.
 
 - **Artikel (Berita dan tips & tricks)**\
-- Pada modul Artikel, kami akan menampilkan artikel-artikel seputar COVID-19. User dengan status admin dapat menambahkan artikel baru dengan sebuah form, sedangkan pengguna hanya dapat membaca artikel. Kemudian, modul  ini akan terintegrasi dengan data pada webapp apabila dilakukan update.
+Pada modul Artikel, kami akan menampilkan artikel-artikel seputar COVID-19. User dengan status admin dapat menambahkan artikel baru dengan sebuah form, sedangkan pengguna hanya dapat membaca artikel. Kemudian, modul  ini akan terintegrasi dengan data pada webapp apabila dilakukan update.
+
 - **Info Lokasi Vaksin**
 Pada modul Info Lokasi Vaksin, kami akan menampilkan lokasi-lokasi vaksin yang tersedia. Info lokasi vaksin yang tersedia didapat dari admin yang menambahkan lokas vaksin dengan form. Jika hanya tamu, maka hanya terdapat tampilan lokasi yang terseda, namun bila yang login adalah admin, maka dapat menambahkan lokasi vaksin yang baru.
+
 - **Info Vaksin di Indonesia**\
 Pada modul Info Vaksin, kami akan menampilkan info-info vaksin yang ada di Indonesia. Informasi tiap vaksin disimpan pada text JSON di webapp vaksinfo. Kami akan mengintegrasikan webapp yang kami buat dengan cara melakukan pemanggilan Asynchronus JSON menggunakan flutter untuk menampilkan informasi tersebut. Pada modul ini kami juga akan membuat form yang dapat digunakan user untuk memberikan komen tentang vaksin yang suda diambil.
 - **Statistik**
