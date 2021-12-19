@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
+import 'login.dart';
 
-class LoginPage extends StatelessWidget {
+class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => new SignupPage()
+        '/login': (BuildContext context) => new LoginPage()
       },
-      home: new MyLoginPage(),
+      home: new MySignupPage(),
     );
   }
 }
 
-class MyLoginPage extends StatefulWidget {
+class MySignupPage extends StatefulWidget {
   @override
-  _MyLoginPageState createState() => new _MyLoginPageState();
+  _MySignupPageState createState() => new _MySignupPageState();
 }
 
-class _MyLoginPageState extends State<MyLoginPage> {
+class _MySignupPageState extends State<MySignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -71,7 +71,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                    child: Text('Login',
+                    child: Text('Daftar',
                         style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -80,6 +80,17 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   TextField(
                     decoration: InputDecoration(
                         labelText: 'USERNAME',
+                        labelStyle: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
+                  ),
+                  SizedBox(height: 20.0),
+                  TextField(
+                    decoration: InputDecoration(
+                        labelText: 'EMAIL',
                         labelStyle: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
@@ -99,6 +110,18 @@ class _MyLoginPageState extends State<MyLoginPage> {
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: true,
                   ),
+                  SizedBox(height: 20.0),
+                  TextField(
+                    decoration: InputDecoration(
+                        labelText: 'CONFIRM PASSWORD',
+                        labelStyle: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
+                  ),
+                  SizedBox(height: 20.0),
                   SizedBox(height: 5.0),
                   SizedBox(height: 40.0),
                   Container(
@@ -112,7 +135,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                         onTap: () {},
                         child: Center(
                           child: Text(
-                            'LOGIN',
+                            'DAFTAR',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -130,16 +153,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Belum punya akun ?',
+                'Sudah punya akun ?',
                 style: TextStyle(fontFamily: 'Montserrat'),
               ),
               SizedBox(width: 5.0),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/signup');
+                  Navigator.of(context).pushNamed('/login');
                 },
                 child: Text(
-                  'Daftar disini',
+                  'Login disini',
                   style: TextStyle(
                       color: Colors.red,
                       fontFamily: 'Montserrat',

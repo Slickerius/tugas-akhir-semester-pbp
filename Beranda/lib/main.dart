@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }
@@ -56,7 +56,8 @@ class _HomePageState extends State<HomePage> {
         // title: Text('Rapid Tech'),
         title: Align(
           alignment: Alignment(1, 1.6),
-          child: Image.asset('assets/images/Logo.png',
+          child: Image.asset(
+            'assets/images/Logo.png',
             height: 50,
             width: 60,
           ),
@@ -85,31 +86,31 @@ class _HomePageState extends State<HomePage> {
         // show the list of menu drawer
         children: [
           menuItem(1, "Dashboard", Icons.dashboard_outlined,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           menuItem(2, "Artikel", Icons.article_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           menuItem(3, "Info Vaksin", Icons.integration_instructions_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           menuItem(4, "Lokasi Vaksin", Icons.location_on_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           menuItem(5, "Statistik", Icons.query_stats_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           Divider(),
           menuItem(6, "Tanya Jawab", Icons.question_answer_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
           Divider(),
           menuItem(7, "Login", Icons.login_rounded,
-              currentPage == DrawerSections.dashboard ? true:false),
+              currentPage == DrawerSections.dashboard ? true : false),
         ],
       ),
     );
   }
 
-  Widget menuItem(int id, String title, IconData icon, bool selected){
+  Widget menuItem(int id, String title, IconData icon, bool selected) {
     return Material(
       color: selected ? Colors.grey[300] : Colors.transparent,
       child: InkWell(
-        onTap: (){
+        onTap: () {
           Navigator.pop(context);
           setState(() {
             if (id == 1) {
@@ -145,8 +146,8 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   title,
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
                 ),
               ),
