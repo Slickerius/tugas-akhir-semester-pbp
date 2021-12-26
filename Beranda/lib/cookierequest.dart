@@ -44,7 +44,6 @@ class CookieRequest {
       c.withCredentials = true;
     }
     local = await SharedPreferences.getInstance();
-    username = data['username'];
     http.Response response =
         await _client.post(Uri.parse(url), body: data, headers: headers);
 
@@ -52,6 +51,7 @@ class CookieRequest {
 
     if (response.statusCode == 200) {
       loggedIn = true;
+      username = data['username'];
     } else {
       loggedIn = false;
     }
