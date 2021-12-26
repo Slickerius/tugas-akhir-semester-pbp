@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'signup.dart';
+import 'package:provider/provider.dart';
+import 'cookierequest.dart';
+import 'main.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -7,7 +10,8 @@ class LoginPage extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => new SignupPage()
+        '/signup': (BuildContext context) => new SignupPage(),
+        '/redirect': (BuildContext context) => new HomePage(),
       },
       home: new MyLoginPage(),
     );
@@ -20,8 +24,14 @@ class MyLoginPage extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<MyLoginPage> {
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
+
+  String username = "";
+  String password1 = "";
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return new Scaffold(
         body: SingleChildScrollView(
       //untuk menghindari overflow dibawah
@@ -78,6 +88,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                             color: Colors.black)),
                   ),
                   TextField(
+                    controller: myController,
                     decoration: InputDecoration(
                         labelText: 'USERNAME',
                         labelStyle: TextStyle(
@@ -89,6 +100,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   ),
                   SizedBox(height: 20.0),
                   TextField(
+                    controller: myController2,
                     decoration: InputDecoration(
                         labelText: 'PASSWORD',
                         labelStyle: TextStyle(
@@ -109,7 +121,39 @@ class _MyLoginPageState extends State<MyLoginPage> {
                       color: Colors.red,
                       elevation: 7.0,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          username = myController.text;
+                          password1 = myController2.text;
+                          // 'username' and 'password' should be the values of the user login form.
+                          final response = await request.login(
+                              "https://vaksinfo.herokuapp.com/authentication/",
+                              {
+                                'username': username,
+                                'password': password1,
+                              });
+                          if (request.loggedIn) {
+                            // Code here will run if the login succeeded.
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 5),
+                              content: Text(
+                                  "Berhasil login, silahkan kembali ke halaman anda dengan menekan menu disamping"),
+                              backgroundColor: Colors.green,
+                            );
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            // Code here will run if the login failed (wrong username/password).
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 5),
+                              content: Text("Email atau Password salah!"),
+                              backgroundColor: Colors.red,
+                            );
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        },
                         child: Center(
                           child: Text(
                             'LOGIN',

@@ -1,5 +1,7 @@
 import 'package:beranda/artikel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'cookierequest.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
   @override
@@ -29,7 +31,13 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
             // ),
             child: Align(
               alignment: Alignment(-0.90, 1.6),
-              child: Text('Hello!', style: TextStyle(fontSize: 50.0, fontFamily: 'Baloo Bhaijaan 2', fontWeight: FontWeight.w500, color: Colors.black),
+              child: Text(
+                'Hello ' + context.watch<CookieRequest>().username + '!',
+                style: TextStyle(
+                    fontSize: 50.0,
+                    fontFamily: 'Baloo Bhaijaan 2',
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
               ),
             ),
           ),

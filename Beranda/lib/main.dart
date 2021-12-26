@@ -1,6 +1,7 @@
 import 'package:beranda/statistik.dart';
 import 'package:beranda/tanya_jawab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'artikel.dart';
 import 'dashboard.dart';
@@ -8,6 +9,7 @@ import 'info_vaksin.dart';
 import 'login.dart';
 import 'lokasi_vaksin.dart';
 import 'my_drawer_header.dart';
+import 'cookierequest.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,9 +18,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+
+        return request;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+      ),
     );
   }
 }
@@ -32,6 +41,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var currentPage = DrawerSections.dashboard;
+
+  void logout() async {
+    context.watch<CookieRequest>().clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     var container;
@@ -48,7 +62,13 @@ class _HomePageState extends State<HomePage> {
     } else if (currentPage == DrawerSections.tanya_jawab) {
       container = TanyaJawabPage();
     } else if (currentPage == DrawerSections.login) {
-      container = LoginPage();
+      if (context.watch<CookieRequest>().loggedIn == true) {
+        print(context.watch<CookieRequest>().username);
+        context.watch<CookieRequest>().clear();
+        container = LoginPage();
+      } else {
+        container = LoginPage();
+      }
     }
     return Scaffold(
       appBar: AppBar(
@@ -99,7 +119,7 @@ class _HomePageState extends State<HomePage> {
           menuItem(6, "Tanya Jawab", Icons.question_answer_rounded,
               currentPage == DrawerSections.dashboard ? true : false),
           Divider(),
-          menuItem(7, "Login", Icons.login_rounded,
+          menuItem(7, "Login/Logout", Icons.login_rounded,
               currentPage == DrawerSections.dashboard ? true : false),
         ],
       ),
