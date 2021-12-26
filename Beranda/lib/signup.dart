@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'main.dart';
+import 'cookierequest.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
   @override
@@ -7,7 +12,8 @@ class SignupPage extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) => new LoginPage()
+        '/login': (BuildContext context) => new LoginPage(),
+        '/redirect': (BuildContext context) => new HomePage(),
       },
       home: new MySignupPage(),
     );
@@ -20,8 +26,18 @@ class MySignupPage extends StatefulWidget {
 }
 
 class _MySignupPageState extends State<MySignupPage> {
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
+  final myController3 = TextEditingController();
+  final myController4 = TextEditingController();
+
+  String username = "";
+  String email = "";
+  String password1 = "";
+  String password2 = "";
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return new Scaffold(
         body: SingleChildScrollView(
       //untuk menghindari overflow dibawah
@@ -78,6 +94,7 @@ class _MySignupPageState extends State<MySignupPage> {
                             color: Colors.black)),
                   ),
                   TextField(
+                    controller: myController,
                     decoration: InputDecoration(
                         labelText: 'USERNAME',
                         labelStyle: TextStyle(
@@ -89,6 +106,7 @@ class _MySignupPageState extends State<MySignupPage> {
                   ),
                   SizedBox(height: 20.0),
                   TextField(
+                    controller: myController2,
                     decoration: InputDecoration(
                         labelText: 'EMAIL',
                         labelStyle: TextStyle(
@@ -100,6 +118,7 @@ class _MySignupPageState extends State<MySignupPage> {
                   ),
                   SizedBox(height: 20.0),
                   TextField(
+                    controller: myController3,
                     decoration: InputDecoration(
                         labelText: 'PASSWORD',
                         labelStyle: TextStyle(
@@ -112,6 +131,8 @@ class _MySignupPageState extends State<MySignupPage> {
                   ),
                   SizedBox(height: 20.0),
                   TextField(
+                    obscureText: true,
+                    controller: myController4,
                     decoration: InputDecoration(
                         labelText: 'CONFIRM PASSWORD',
                         labelStyle: TextStyle(
@@ -132,7 +153,41 @@ class _MySignupPageState extends State<MySignupPage> {
                       color: Colors.red,
                       elevation: 7.0,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          username = myController.text;
+                          email = myController2.text;
+                          password1 = myController3.text;
+                          password2 = myController4.text;
+
+                          final response = await request.post(
+                              "https://vaksinfo.herokuapp.com/authentication/daftar",
+                              jsonEncode(<String, String>{
+                                "username": username,
+                                "email": email,
+                                "password1": password1,
+                                "password2": password2,
+                              }));
+                          print(response);
+                          if (response['status'] == false) {
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 5),
+                              content: Text("Tidak berhasil membuat akun!"),
+                              backgroundColor: Colors.red,
+                            );
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            final snackBar = SnackBar(
+                              duration: const Duration(seconds: 5),
+                              content: Text("Berhasil membuat akun!"),
+                              backgroundColor: Colors.green,
+                            );
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        },
                         child: Center(
                           child: Text(
                             'DAFTAR',
