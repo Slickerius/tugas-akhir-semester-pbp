@@ -22,13 +22,6 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
           Container(
             margin: EdgeInsets.only(bottom: 10),
             height: 160,
-            // child: Align(
-            //   // alignment: Alignment,
-            //   child: Image.asset('assets/images/Logo.png',
-            //     height: 50,
-            //     width: 60,
-            //   ),
-            // ),
             child: Align(
               alignment: Alignment(-0.90, 1.6),
               child: Text(

@@ -23,6 +23,10 @@ class MyLoginPage extends StatefulWidget {
   _MyLoginPageState createState() => new _MyLoginPageState();
 }
 
+class Getter {
+  static bool finale = false;
+}
+
 class _MyLoginPageState extends State<MyLoginPage> {
   final myController = TextEditingController();
   final myController2 = TextEditingController();
@@ -131,6 +135,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                 'username': username,
                                 'password': password1,
                               });
+                          Getter.finale = request.loggedIn;
                           if (request.loggedIn) {
                             // Code here will run if the login succeeded.
                             final snackBar = SnackBar(
