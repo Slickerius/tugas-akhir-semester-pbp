@@ -167,11 +167,29 @@ class _MySignupPageState extends State<MySignupPage> {
                                 "password1": password1,
                                 "password2": password2,
                               }));
-                          print(response);
+                          print(response['request']);
                           if (response['status'] == false) {
+                            //bagian formatting string error messages agar jadi lebih rapih
+                            String finalError = "";
+                            if (response['request']['username'] == null) {
+                              String error1 =
+                                  response['request']['password2'].toString();
+                              String error2 = error1.replaceAll("[", "");
+                              String error3 = error2.replaceAll("]", "");
+                              finalError = error3.replaceAll(".", "");
+                            } else {
+                              String error1 =
+                                  response['request']['username'].toString();
+                              String error2 = error1.replaceAll("[", "");
+                              String error3 = error2.replaceAll("]", "");
+                              finalError = error3.replaceAll(".", "");
+                            }
                             final snackBar = SnackBar(
                               duration: const Duration(seconds: 5),
-                              content: Text("Tidak berhasil membuat akun!"),
+                              content: Text(
+                                  "Tidak berhasil membuat akun!, error messages :" +
+                                      "\n" +
+                                      finalError),
                               backgroundColor: Colors.red,
                             );
 
