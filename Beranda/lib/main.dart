@@ -41,6 +41,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var currentPage = DrawerSections.dashboard;
+  int activeIndex = 0;
+  final urlImages = [
+    'assets/images/berita2.jpeg',
+    'assets/images/berita3.jpeg',
+    'assets/images/berita4.jpeg'
+  ];
 
   void logout() async {
     context.watch<CookieRequest>().clear();
@@ -73,7 +79,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffffb1b1),
-        // title: Text('Rapid Tech'),
         title: Align(
           alignment: Alignment(1, 1.6),
           child: Image.asset(
@@ -115,7 +120,6 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.dashboard ? true : false),
           menuItem(5, "Statistik", Icons.query_stats_rounded,
               currentPage == DrawerSections.dashboard ? true : false),
-          Divider(),
           menuItem(6, "Tanya Jawab", Icons.question_answer_rounded,
               currentPage == DrawerSections.dashboard ? true : false),
           Divider(),
