@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'artikel.dart';
 import 'artikel_details.dart';
+import 'package:jiffy/jiffy.dart';
 
 Widget artikelListTile(Artikel artikel, BuildContext context) {
   return InkWell(
@@ -47,10 +48,11 @@ Widget artikelListTile(Artikel artikel, BuildContext context) {
               borderRadius: BorderRadius.circular(30.0),
             ),
             child: Text(
-              artikel.pubDate,
+              getDate(artikel),
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 13.0,
+                  fontSize: 10.0,
+                  fontFamily: 'Montserrat',
                   decoration: TextDecoration.none),
             ),
           ),
@@ -61,6 +63,7 @@ Widget artikelListTile(Artikel artikel, BuildContext context) {
             artikel.title,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat',
                 fontSize: 16.0,
                 color: Colors.black,
                 decoration: TextDecoration.none),
@@ -69,4 +72,9 @@ Widget artikelListTile(Artikel artikel, BuildContext context) {
       ),
     ),
   );
+}
+
+getDate(Artikel artikel) {
+  var date = Jiffy(artikel.pubDate).yMMMMd;
+  return date;
 }
