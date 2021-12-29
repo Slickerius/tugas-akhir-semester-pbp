@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'artikel.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:jiffy/jiffy.dart';
 
 class ArticlePage extends StatelessWidget {
   final Artikel artikel;
@@ -13,7 +15,7 @@ class ArticlePage extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,9 +23,27 @@ class ArticlePage extends StatelessWidget {
                 Text(artikel.title,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                        fontSize: 22.0,
                         color: Colors.black,
                         decoration: TextDecoration.none)),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(6.0),
+                  margin: const EdgeInsets.only(bottom: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Text(
+                    getDate(artikel),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10.0,
+                    ),
+                  ),
+                ),
                 Container(
                   height: 200.0,
                   width: double.infinity,
@@ -39,29 +59,9 @@ class ArticlePage extends StatelessWidget {
                 const SizedBox(
                   height: 8.0,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Text(
-                    artikel.pubDate,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                Html(
+                  data: artikel.body,
                 ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Text(
-                  artikel.body,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
-                )
               ],
             ),
           ),
@@ -69,4 +69,9 @@ class ArticlePage extends StatelessWidget {
       ),
     );
   }
+}
+
+getDate(Artikel artikel) {
+  var date = Jiffy(artikel.pubDate).yMMMMd;
+  return date;
 }
