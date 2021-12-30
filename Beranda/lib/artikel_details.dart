@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'artikel.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:html/dom.dart' as dom;
 
 class ArticlePage extends StatelessWidget {
   final Artikel artikel;
@@ -60,8 +62,11 @@ class ArticlePage extends StatelessWidget {
                   height: 8.0,
                 ),
                 Html(
-                  data: artikel.body,
-                ),
+                    data: artikel.body,
+                    onLinkTap: (String? url, RenderContext context,
+                        Map<String, String> attributes, dom.Element? element) {
+                      _launchURL(url);
+                    }),
               ],
             ),
           ),
@@ -74,4 +79,8 @@ class ArticlePage extends StatelessWidget {
 getDate(Artikel artikel) {
   var date = Jiffy(artikel.pubDate).yMMMMd;
   return date;
+}
+
+void _launchURL(url) async {
+  if (!await launch(url)) throw 'Could not launch $url';
 }
