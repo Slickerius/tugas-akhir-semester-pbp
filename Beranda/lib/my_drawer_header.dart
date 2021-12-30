@@ -1,4 +1,3 @@
-import 'package:beranda/artikel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'cookierequest.dart';
