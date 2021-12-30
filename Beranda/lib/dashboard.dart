@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:beranda/user_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -9,6 +10,7 @@ import 'main.dart';
 import 'package:provider/provider.dart';
 import 'cookierequest.dart';
 import 'login.dart';
+import 'package:http/http.dart' as http;
 
 class DashboardPage extends StatelessWidget {
   @override
@@ -29,6 +31,20 @@ class getRequest {
   static var request = null;
 }
 
+Future<UserModel> createUser(String nama, String email, String komentar) async{
+  final String apiUrl = "https://vaksinfo.herokuapp.com/authentication/json_fb";
+
+  final response2 = await http.post(Uri.parse(apiUrl), body: {
+    "comments": komentar,
+    "name": nama,
+    "email": email
+  });
+
+  final String responseString = response2.body;
+
+  return userModelFromJson(responseString);
+}
+
 class _MyDashboardPageState extends State<MyDashboardPage> {
   var currentPage = DrawerSections.dashboard;
   int activeIndex = 0;
@@ -47,6 +63,8 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
   String nama = "";
   String email = "";
   String komentar = "";
+
+  late UserModel _user;
 
   @override
   Widget build(BuildContext context) {
@@ -176,38 +194,41 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                         ),
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 25.0)),
-                    Row(
-                        children: <Widget> [
-                          Radio(
-                              value: 'TP',
-                              groupValue: colorGroupValue,
-                              onChanged: (val) {
-                                setState(() {
-                                  colorGroupValue = val as String;
-                                });
-
-                              }
-                          ),
-                          Text("Tidak Puas :("),
-                        ]
-                    ),
-                    Row(
-                        children: <Widget> [
-                          Radio(
-                              value: 'P',
-                              groupValue: colorGroupValue,
-                              onChanged: (val) {
-                                setState(() {
-                                  colorGroupValue = val as String;
-                                });
-                              }
-                          ),
-                          Text("Puas :)"),
-                        ]
-                    ),
+                    // Padding(padding: EdgeInsets.only(top: 25.0)),
+                    // Row(
+                    //     children: <Widget> [
+                    //       Radio(
+                    //           value: 'TP',
+                    //           groupValue: colorGroupValue,
+                    //           onChanged: (val) {
+                    //             setState(() {
+                    //               colorGroupValue = val as String;
+                    //             });
+                    //
+                    //           }
+                    //       ),
+                    //       Text("Tidak Puas :("),
+                    //     ]
+                    // ),
+                    // Row(
+                    //     children: <Widget> [
+                    //       Radio(
+                    //           value: 'P',
+                    //           groupValue: colorGroupValue,
+                    //           onChanged: (val) {
+                    //             setState(() {
+                    //               colorGroupValue = val as String;
+                    //             });
+                    //           }
+                    //       ),
+                    //       Text("Puas :)"),
+                    //     ]
+                    // ),
                     Padding(padding: EdgeInsets.only(top: 25.0)),
                     buildButton(),
+                    // Padding(padding: EdgeInsets.only(top: 25.0)),
+                    // _user == null ? Container() :
+                    // Text("Terima kasih, ${_user.name} dengan akun email ${_user.email}, atas feedback yang diberikan"),
                   ],
                 ),
               ),
@@ -261,38 +282,64 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
       nama = myController.text;
       email = myController2.text;
       komentar = myController3.text;
-      final response = await getRequest.request.login(
-          "https://vaksinfo.herokuapp.com/authentication/feedbackjson",
-          jsonEncode(<String, String>{
-            'nama': nama,
-            'email': email,
-            'komentar': komentar,
-          }));
-      print(response);
-      if (loggedIn2) {
-        // Kirim data ke json?
-        final snackBar = SnackBar(
-          duration: const Duration(seconds: 5),
-          content: Text(
-              "Terima kasih atas feedback yang Anda berikan :)"),
-          backgroundColor: Colors.green,
-        );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(snackBar);
-        myController.clear();
-        myController2.clear();
-        myController3.clear();
-      } else {
-        final snackBar = SnackBar(
-          duration: const Duration(seconds: 5),
-          content: Text("Silakan Login terlebih dahulu dengan menekan menu di samping."),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(snackBar);
-        print("Gagal kirim feedback");
-      }
+      // final response = await getRequest.request.login(
+      //     "https://vaksinfo.herokuapp.com/authentication/feedbackjson",
+      //     jsonEncode(<String, String>{
+      //       'nama': nama,
+      //       'email': email,
+      //       'komentar': komentar,
+      //     }));
+      // print(response);
 
+
+
+        if (loggedIn2) {
+          print("MASUK");
+          // Kirim data ke json?
+          final UserModel user = await createUser(nama, email, komentar);
+          print("oke");
+          setState(() {
+            _user = user;
+          });
+          print(_user.name);
+          print(_user.email);
+          print(_user.comments);
+
+          if (nama != "" && email != "" && komentar != "") {
+            print('YES');
+            final snackBar = SnackBar(
+              duration: const Duration(seconds: 5),
+              content: Text(
+                  "Terima kasih atas feedback yang Anda berikan :)"),
+              backgroundColor: Colors.green,
+            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(snackBar);
+            myController.clear();
+            myController2.clear();
+            myController3.clear();
+          } else {
+            final snackBar = SnackBar(
+              duration: const Duration(seconds: 5),
+              content: Text(
+                  "Silakan isi feedback dengan lengkap."),
+              backgroundColor: Colors.blue,
+            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(snackBar);
+          }
+        } else {
+          print('NO');
+          final snackBar = SnackBar(
+            duration: const Duration(seconds: 5),
+            content: Text(
+                "Silakan Login terlebih dahulu dengan menekan menu di samping."),
+            backgroundColor: Colors.red,
+          );
+          ScaffoldMessenger.of(context)
+              .showSnackBar(snackBar);
+          print("Gagal kirim feedback");
+        }
     },
   );
 
